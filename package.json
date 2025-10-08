@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A full-stack task management application for university students",
   "scripts": {
-    "start": "cd Backend && npm start",
+    "start": "cd Backend && node src/server.js",
     "dev": "cd Backend && npm run dev",
     "build": "cd Backend && npm install",
     "install-backend": "cd Backend && npm install",
