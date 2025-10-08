@@ -28,3 +28,12 @@ services:
         sync: false
       - key: ENABLE_SMS
         value: false
+
+  - type: static
+    name: university-task-tracker-frontend
+    plan: free
+    buildCommand: cd Frontend && npm install && npm run build
+    staticPublishPath: ./Frontend/dist
+    envVars:
+      - key: NODE_ENV
+        value: production

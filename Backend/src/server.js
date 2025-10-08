@@ -19,8 +19,7 @@ const allowedOrigins = [
   "http://localhost:5173", 
   "http://127.0.0.1:3000", 
   "http://127.0.0.1:5173",
-  // Add your frontend Render URL here when you deploy it
-  // "https://your-frontend-app.onrender.com"
+  "https://university-task-tracker-frontend.onrender.com", // Frontend Render URL
 ];
 
 app.use(cors({
