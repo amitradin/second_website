@@ -14,8 +14,26 @@ dotenv.config({ quiet: true });
 const app = express();
 
 // CORS configuration
+const allowedOrigins = [
+  "http://localhost:3000", 
+  "http://localhost:5173", 
+  "http://127.0.0.1:3000", 
+  "http://127.0.0.1:5173",
+  // Add your frontend Render URL here when you deploy it
+  // "https://your-frontend-app.onrender.com"
+];
+
 app.use(cors({
-  origin: ["http://localhost:3000", "http://localhost:5173", "http://127.0.0.1:3000", "http://127.0.0.1:5173"],
+  origin: function (origin, callback) {
+    // Allow requests with no origin (mobile apps, curl, etc.)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 
@@ -24,8 +42,14 @@ app.use(express.json());
 app.use("/api/tasks", taskRoutes);
 app.use("/api/users", userRoutes);
 
+// Use environment port or default to 5001
+const PORT = process.env.PORT || 5001;
+
 connectDB().then(() => {
-  app.listen(5001, () => {
-    console.log("port 5001");
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on port ${PORT}`);
   });
+}).catch((error) => {
+  console.error('Failed to connect to database:', error);
+  process.exit(1);
 });

@@ -1,0 +1,19 @@
+{
+  "name": "university-task-tracker",
+  "version": "1.0.0",
+  "description": "A full-stack task management application for university students",
+  "scripts": {
+    "start": "cd Backend && npm start",
+    "dev": "cd Backend && npm run dev",
+    "install-backend": "cd Backend && npm install",
+    "install-frontend": "cd Frontend && npm install",
+    "install-all": "npm run install-backend && npm run install-frontend"
+  },
+  "keywords": ["task-management", "university", "student", "react", "node", "express", "mongodb"],
+  "author": "Your Name",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}

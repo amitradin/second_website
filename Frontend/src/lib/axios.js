@@ -1,7 +1,9 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: "http://localhost:5001/api",
+    baseURL: process.env.NODE_ENV === 'production' 
+        ? "https://your-backend-service-name.onrender.com/api"  // Replace with your actual Render backend URL
+        : "http://localhost:5001/api",
 });
 
 // Add a request interceptor to include the auth token
@@ -30,7 +32,11 @@ instance.interceptors.response.use(
             const refreshToken = localStorage.getItem('refreshToken');
             if (refreshToken) {
                 try {
-                    const response = await axios.post('http://localhost:5001/api/users/refresh-token', {
+                    const baseURL = process.env.NODE_ENV === 'production' 
+                        ? "https://your-backend-service-name.onrender.com/api"  // Replace with your actual Render backend URL
+                        : "http://localhost:5001/api";
+                    
+                    const response = await axios.post(`${baseURL}/users/refresh-token`, {
                         refreshToken
                     });
                     

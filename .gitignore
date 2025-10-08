@@ -48,6 +48,13 @@ Thumbs.db
 *.tmp
 *.temp
 
-# Package lock files (optional - you might want to keep these)
+# Package lock files (keep these for consistent installs)
+# Uncomment the line below if you want to ignore package-lock.json
 # package-lock.json
-# yarn.lock
+
+# Render specific
+.render/
+
+# Production builds
+*/build/
+*/dist/
