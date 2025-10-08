@@ -39,6 +39,19 @@ app.use(cors({
 
 app.use(express.json());
 
+// Root route - API status
+app.get('/', (req, res) => {
+  res.json({
+    message: 'University Task Tracker API is running!',
+    version: '1.0.0',
+    endpoints: {
+      tasks: '/api/tasks',
+      users: '/api/users'
+    },
+    status: 'healthy'
+  });
+});
+
 app.use("/api/tasks", taskRoutes);
 app.use("/api/users", userRoutes);
 
