@@ -1,9 +1,9 @@
 services:
   - type: web
-    name: university-task-tracker-backend
+    name: university-task-tracker-fullstack
     env: node
     plan: free
-    buildCommand: npm install
+    buildCommand: npm run build
     startCommand: npm start
     envVars:
       - key: NODE_ENV
@@ -28,12 +28,3 @@ services:
         sync: false
       - key: ENABLE_SMS
         value: false
-
-  - type: static
-    name: university-task-tracker-frontend
-    plan: free
-    buildCommand: cd Frontend && npm install && npm run build
-    staticPublishPath: ./Frontend/dist
-    envVars:
-      - key: NODE_ENV
-        value: production

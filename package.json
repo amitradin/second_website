@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "build": "npm install",
+    "build": "npm install && cd Frontend && npm install && npm run build",
     "install-backend": "cd Backend && npm install",
     "install-frontend": "cd Frontend && npm install",
     "install-all": "npm run install-backend && npm run install-frontend"

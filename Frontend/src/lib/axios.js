@@ -2,7 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({
     baseURL: process.env.NODE_ENV === 'production' 
-        ? "https://second-website-4.onrender.com/api"  // Your deployed backend URL
+        ? "/api"  // Relative URL since frontend and backend are served from same domain
         : "http://localhost:5001/api",
 });
 
