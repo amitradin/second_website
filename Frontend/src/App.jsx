@@ -1,5 +1,5 @@
-import React from "react";
-import {Route, Routes} from "react-router";
+import React, { useState, useEffect } from "react";
+import {Route, Routes, Navigate} from "react-router";
 
 import HomePage from "./Pages/HomePage";
 import CreateTask from "./Pages/createTask";
@@ -8,19 +8,77 @@ import LoginPage from "./Pages/LoginPage";
 import SignupPage from "./Pages/SignupPage";
 import Header from "./Components/Header";
 
+// Component to protect routes that require authentication
+const ProtectedRoute = ({ children }) => {
+  const isAuthenticated = localStorage.getItem('accessToken');
+  return isAuthenticated ? children : <Navigate to="/login" replace />;
+};
+
+// Component to redirect authenticated users away from auth pages
+const AuthRoute = ({ children }) => {
+  const isAuthenticated = localStorage.getItem('accessToken');
+  return !isAuthenticated ? children : <Navigate to="/" replace />;
+};
+
 const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Check authentication status on app load
+    const token = localStorage.getItem('accessToken');
+    setIsAuthenticated(!!token);
+    setIsLoading(false);
+  }, []);
+
   const isAuthPage = window.location.pathname === '/login' || window.location.pathname === '/signup';
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-400 flex items-center justify-center">
+        <div className="text-xl text-white">Loading...</div>
+      </div>
+    );
+  }
   
   return(
     <div className="min-h-screen bg-gray-400">
-      {!isAuthPage && <Header />}
+      {!isAuthPage && isAuthenticated && <Header />}
       <div className="container mx-auto p-5">
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/create-task" element={<CreateTask />} />
-          <Route path="/completed" element={<CompletedTasks />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
+          {/* Default route - redirects based on authentication */}
+          <Route path="/" element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          } />
+          
+          {/* Protected routes - require authentication */}
+          <Route path="/create-task" element={
+            <ProtectedRoute>
+              <CreateTask />
+            </ProtectedRoute>
+          } />
+          <Route path="/completed" element={
+            <ProtectedRoute>
+              <CompletedTasks />
+            </ProtectedRoute>
+          } />
+          
+          {/* Auth routes - redirect to home if already authenticated */}
+          <Route path="/login" element={
+            <AuthRoute>
+              <LoginPage />
+            </AuthRoute>
+          } />
+          <Route path="/signup" element={
+            <AuthRoute>
+              <SignupPage />
+            </AuthRoute>
+          } />
+          
+          {/* Fallback route */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
     </div>
