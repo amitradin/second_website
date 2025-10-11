@@ -47,9 +47,9 @@ const CompletedTasks = () => {
     : filteredTasks.filter(task => selectedPriorities.includes(task.priority));
 
   return (
-    <div className="flex min-h-[calc(100vh-80px)]">
+    <div className="flex flex-col lg:flex-row min-h-[calc(100vh-80px)]">
       {/* Sidebar */}
-      <div className="flex flex-col w-1/4 min-w-64">
+      <div className="flex flex-col w-full lg:w-1/4 lg:min-w-64">
         <Sidebar
           activeRoute="completed"
           taskCount={tasks.length}
@@ -60,7 +60,7 @@ const CompletedTasks = () => {
       </div>
 
       {/* Right half - tasks */}
-      <div className="w-3/4 p-4">
+      <div className="w-full lg:w-3/4 p-4">
         <h1 className="text-2xl font-bold mb-6 text-black">Completed Tasks</h1>
         {filteredPriorities.length > 0 ? (
           <div className="space-y-4">

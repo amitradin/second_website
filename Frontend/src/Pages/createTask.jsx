@@ -41,9 +41,9 @@ const CreateTask = () => {
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-80px)]">
-      {/* Left half - Navigation Drawer */}
-      <div className="w-1/4 p-4">
+    <div className="flex flex-col lg:flex-row min-h-[calc(100vh-80px)]">
+      {/* Left - Navigation Drawer */}
+      <div className="w-full lg:w-1/4 p-4">
         <div className="drawer lg:drawer-open ">
           <input id="my-drawer" type="checkbox" className="drawer-toggle" />
           <div className="drawer-content flex flex-col">
@@ -94,11 +94,11 @@ const CreateTask = () => {
         </div>
       </div>
 
-      {/* Right half - Create Task Form */}
-      <div className="w-3/4 p-8">
+      {/* Right - Create Task Form */}
+      <div className="w-full lg:w-3/4 p-4 lg:p-8">
         <div className="max-w-2xl mx-auto">
           {/* Header */}
-          <div className="flex items-center mb-8">
+          <div className="flex items-center mb-6 lg:mb-8">
             <button
               onClick={() => navigate("/")}
               className="mr-4 p-2 rounded-lg hover:bg-gray-100 transition-colors"
@@ -106,13 +106,13 @@ const CreateTask = () => {
             >
               <ArrowLeft className="w-5 h-5 text-gray-600" />
             </button>
-            <h1 className="text-3xl font-bold text-gray-800">
+            <h1 className="text-2xl lg:text-3xl font-bold text-gray-800">
               Create New Task
             </h1>
           </div>
 
           {/* Form Card */}
-          <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-8">
+          <div className="bg-white rounded-lg shadow-lg border border-gray-200 p-4 lg:p-8">
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Title Field */}
               <div>
@@ -223,18 +223,18 @@ const CreateTask = () => {
               </div>
 
               {/* Submit Button */}
-              <div className="flex gap-4 pt-6">
+              <div className="flex flex-col sm:flex-row gap-4 pt-6">
                 <button
                   type="button"
                   onClick={() => navigate("/")}
-                  className="flex-1 py-3 px-6 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
+                  className="sm:flex-1 py-3 px-6 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex-1 py-3 px-6 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
+                  className="sm:flex-1 py-3 px-6 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
                 >
                   {loading ? "Creating..." : "Create Task"}
                 </button>

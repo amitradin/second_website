@@ -47,9 +47,9 @@ const HomePage = () => {
     : filteredTasks.filter(task => selectedPriorities.includes(task.priority));
 
   return (
-    <div className="flex min-h-[calc(100vh-80px)]">
+    <div className="flex flex-col lg:flex-row min-h-[calc(100vh-80px)]">
       {/* Left side - Sidebar and Filter */}
-      <div className="flex flex-col w-1/4 min-w-64">
+      <div className="flex flex-col w-full lg:w-1/4 lg:min-w-64">
         {/* Sidebar */}
         <Sidebar 
           activeRoute="pending" 
@@ -62,7 +62,7 @@ const HomePage = () => {
       </div>
 
       {/* Right side - tasks */}
-      <div className="flex-1 p-4">
+      <div className="w-full lg:flex-1 p-4">
         <h1 className="text-2xl font-bold mb-6 text-black">Pending Tasks</h1>
         {filteredPriorities.length > 0 ? (
           <div className="space-y-4">

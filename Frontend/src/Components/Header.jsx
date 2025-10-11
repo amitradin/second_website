@@ -19,27 +19,25 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
-      <div className="flex justify-between items-center">
-        <div className="flex items-center">
-          <h1 className="text-xl font-semibold text-gray-800">University Task Tracker</h1>
+    <header className="bg-white shadow-sm border-b border-gray-200 px-4 sm:px-6 py-3 sm:py-4">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center min-w-0">
+          <h1 className="text-lg sm:text-xl font-semibold text-gray-800 truncate">University Task Tracker</h1>
         </div>
-        
         {user && (
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
-              <User className="w-5 h-5 text-gray-600" />
-              <span className="text-sm text-gray-700">
+          <div className="flex items-center space-x-3 sm:space-x-4">
+            <div className="flex items-center space-x-2 min-w-0">
+              <User className="w-5 h-5 text-gray-600 shrink-0" />
+              <span className="text-sm text-gray-700 truncate max-w-[140px] sm:max-w-none">
                 {user.firstName} {user.lastName}
               </span>
             </div>
-            
             <button
               onClick={handleLogout}
               className="flex items-center space-x-2 px-3 py-2 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
             >
               <LogOut className="w-4 h-4" />
-              <span>Logout</span>
+              <span className="hidden sm:inline">Logout</span>
             </button>
           </div>
         )}

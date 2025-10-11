@@ -42,9 +42,9 @@ const App = () => {
   }
   
   return(
-    <div className="min-h-screen bg-gray-400">
+    <div className="min-h-screen bg-gray-400 overflow-x-hidden">
       {!isAuthPage && isAuthenticated && <Header />}
-      <div className="container mx-auto p-5">
+      <div className="container mx-auto px-3 sm:p-5">
         <Routes>
           {/* Default route - redirects based on authentication */}
           <Route path="/" element={

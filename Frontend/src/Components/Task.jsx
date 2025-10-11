@@ -123,14 +123,16 @@ const Task = ({ task, setTask }) => {
                   </p>
                 )}
 
-                <div className="flex items-center justify-between mt-2">
+                <div className="flex flex-wrap items-center gap-2 justify-between mt-2">
                   <p className="text-sm text-gray-500">
                     Created: {formatDate(task.createdAt)}
                   </p>
-                  <Circle className={`w-4 h-4 ${getPriorityColor(task.priority)} `} fill="currentColor" />
-                  <p className={`p-1 font-medium ${getPriorityColor(task.priority)}`}>
-                    Priority: {task.priority}
-                  </p>
+                  <div className="flex items-center gap-1">
+                    <Circle className={`w-4 h-4 ${getPriorityColor(task.priority)} `} fill="currentColor" />
+                    <p className={`text-sm font-medium ${getPriorityColor(task.priority)}`}>
+                      Priority: {task.priority}
+                    </p>
+                  </div>
                   {task.dueDate ? (
                     <div className="flex items-center gap-1">
                       <Calendar className="w-4 h-4 text-orange-500" />
