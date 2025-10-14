@@ -1,5 +1,4 @@
 //This is the task card itself
-
 import React from "react";
 import { formatDate } from "../lib/utils.js";
 import axiosInstance from "../lib/axios.js";
@@ -11,14 +10,14 @@ const Task = ({ task, setTask }) => {
   // Function to get priority colors
   const getPriorityColor = (priority) => {
     switch (priority?.toLowerCase()) {
-      case 'high':
-        return 'text-red-500';
-      case 'medium':
-        return 'text-yellow-500';
-      case 'low':
-        return 'text-green-500';
+      case "high":
+        return "text-red-500";
+      case "medium":
+        return "text-yellow-500";
+      case "low":
+        return "text-green-500";
       default:
-        return 'text-gray-500';
+        return "text-gray-500";
     }
   };
 
@@ -31,7 +30,6 @@ const Task = ({ task, setTask }) => {
       await axiosInstance.delete(`/tasks/${id}`); // delete the task
       toast.success("Task deleted successfully");
       setTask((prevTasks) => prevTasks.filter((task) => task._id !== id)); // update the state to remove the deleted task
-
     } catch (error) {
       toast.error("Failed to delete the task");
     }
@@ -51,6 +49,7 @@ const Task = ({ task, setTask }) => {
         priority: task.priority,
         dueDate: formatDate(task.dueDate),
         completed: !task.completed,
+        attachments: task.attachments
       });
 
       // Update the local state
@@ -127,9 +126,16 @@ const Task = ({ task, setTask }) => {
                   <p className="text-sm text-gray-500">
                     Created: {formatDate(task.createdAt)}
                   </p>
-                  <div className="flex items-center gap-1">
-                    <Circle className={`w-4 h-4 ${getPriorityColor(task.priority)} `} fill="currentColor" />
-                    <p className={`text-sm font-medium ${getPriorityColor(task.priority)}`}>
+                  <div className="flex items-center gap-1 justify-center flex-1">
+                    <Circle
+                      className={`w-4 h-4 ${getPriorityColor(task.priority)} `}
+                      fill="currentColor"
+                    />
+                    <p
+                      className={`text-sm font-medium ${getPriorityColor(
+                        task.priority
+                      )}`}
+                    >
                       Priority: {task.priority}
                     </p>
                   </div>

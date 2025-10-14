@@ -1,6 +1,7 @@
 import express from "express"
-import { getAllTasks, createTask, getTaskById, deleteTask, updateTask } from "../controllers/taskController.js"
+import { getAllTasks, createTask, getTaskById, deleteTask, updateTask, uploadTaskFiles, downloadTaskFile, deleteTaskFile } from "../controllers/taskController.js"
 import { authenticateToken } from "../middleware/auth.js"
+import upload from "../middleware/upload.js"
 
 const router = express.Router();
 
@@ -18,5 +19,12 @@ router.delete("/:id", authenticateToken, deleteTask);
 
 // Route to update a task by ID (protected)
 router.put("/update/:id", authenticateToken, updateTask);
+
+// Route to upload files to a task (protected)
+router.post("/:id/upload", authenticateToken, upload.array('files', 5), uploadTaskFiles);
+
+router.get("/:id/files/:fileId" , authenticateToken , downloadTaskFile)
+
+router.delete("/:id/files/:fileId" ,authenticateToken, deleteTaskFile)
 
 export default router;

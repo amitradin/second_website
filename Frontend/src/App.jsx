@@ -6,6 +6,7 @@ import CreateTask from "./Pages/createTask";
 import CompletedTasks from "./Pages/CompletedTasks";
 import LoginPage from "./Pages/LoginPage";
 import SignupPage from "./Pages/SignupPage";
+import TaskDetails from "./Pages/TaskDetails";
 import Header from "./Components/Header";
 
 // Component to protect routes that require authentication
@@ -62,6 +63,12 @@ const App = () => {
           <Route path="/completed" element={
             <ProtectedRoute>
               <CompletedTasks />
+            </ProtectedRoute>
+          } />
+
+          <Route path = "/task/:id" element = {
+            <ProtectedRoute>
+              <TaskDetails/>
             </ProtectedRoute>
           } />
           
