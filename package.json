@@ -30,7 +30,8 @@
     "multer": "^2.0.2",
     "nodemailer": "^7.0.9",
     "nodemon": "^3.1.10",
-    "twilio": "^5.10.2"
+    "twilio": "^5.10.2",
+    "upstash": "^0.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"

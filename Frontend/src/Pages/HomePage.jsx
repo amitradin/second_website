@@ -58,7 +58,11 @@ const HomePage = () => {
         />
         
         {/* Filter section - below the sidebar */}
-        <FiltersSection activeRoute="pending" refreshTrigger={tasks.length} onFilterChange={handleFilterChange} />
+        <FiltersSection 
+          activeRoute="pending" 
+          tasks={tasks} 
+          onFilterChange={handleFilterChange} 
+        />
       </div>
 
       {/* Right side - tasks */}

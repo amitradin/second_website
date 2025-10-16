@@ -1,11 +1,10 @@
 //This is the filter section
 import React from "react";
 import { useState, useEffect } from "react";
-import axiosInstance from "../lib/axios.js";
 
 //first Ill add a filter based on the course name, multiple choice is allowed
 
-const FiltersSection = ({ activeRoute, refreshTrigger, onFilterChange }) => {
+const FiltersSection = ({ activeRoute, tasks = [], onFilterChange }) => {
   const [selectedCourses, setSelectedCourses] = useState([]);
   const [uniqueCourses, setCourses] = useState([]);
   const [selectedPriorities, setSelectedPriorities] = useState([]);
@@ -31,30 +30,24 @@ const FiltersSection = ({ activeRoute, refreshTrigger, onFilterChange }) => {
     onFilterChange(selectedCourses, updatedSelection); // Pass both filters to parent
   };
   useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await axiosInstance.get("/tasks");
-        const filterCourses = response.data.filter((task) => {
-          if (activeRoute === "pending") {
-            return task.completed === false;
-          } else if (activeRoute === "completed") {
-            return task.completed === true;
-          }
-          return true; // Show all courses for other routes
-        });
-        const allCourses = filterCourses.map((task) => task.course);
-        const uniqueCourses = [
-          ...new Set(
-            allCourses.filter((course) => course && course.trim() != "")
-          ),
-        ];
-        setCourses(uniqueCourses);
-      } catch (error) {
-        console.error("Error fetching courses:", error);
+    // Process the passed tasks data instead of making API call
+    const filterCourses = tasks.filter((task) => {
+      if (activeRoute === "pending") {
+        return task.completed === false;
+      } else if (activeRoute === "completed") {
+        return task.completed === true;
       }
-    };
-    fetchCourses();
-  }, [activeRoute, refreshTrigger]);
+      return true; // Show all courses for other routes
+    });
+    
+    const allCourses = filterCourses.map((task) => task.course);
+    const uniqueCourses = [
+      ...new Set(
+        allCourses.filter((course) => course && course.trim() !== "")
+      ),
+    ];
+    setCourses(uniqueCourses);
+  }, [activeRoute, tasks]);
 
   return (
     <div className="bg-gray-400 text-gray-800">

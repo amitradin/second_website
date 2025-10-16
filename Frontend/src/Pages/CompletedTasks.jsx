@@ -56,7 +56,11 @@ const CompletedTasks = () => {
           statisticsLabel="Completed Tasks"
         />
 
-        <FiltersSection activeRoute="completed" refreshTrigger={tasks.length} onFilterChange={handleFilterChange} />
+        <FiltersSection 
+          activeRoute="completed" 
+          tasks={tasks} 
+          onFilterChange={handleFilterChange} 
+        />
       </div>
 
       {/* Right half - tasks */}

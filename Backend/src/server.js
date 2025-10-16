@@ -8,6 +8,7 @@ import userRoutes from "./routes/userRoutes.js";
 
 import './services/sendNotifications.js';
 import { checkDueTasks } from "./services/sendNotifications.js";
+import rateLimiter from "./middleware/rateLimiter.js";
 
 dotenv.config({ quiet: true });
 
@@ -37,6 +38,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(rateLimiter);
 
 // Root route - API status
 app.get('/', (req, res) => {
@@ -53,6 +55,7 @@ app.get('/', (req, res) => {
 
 app.use("/api/tasks", taskRoutes);
 app.use("/api/users", userRoutes);
+
 
 // Use environment port or default to 5001
 const PORT = process.env.PORT || 5001;

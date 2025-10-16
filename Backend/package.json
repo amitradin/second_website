@@ -13,6 +13,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@upstash/ratelimit": "^2.0.6",
+    "@upstash/redis": "^1.35.6",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
@@ -24,6 +26,7 @@
     "multer": "^2.0.2",
     "nodemailer": "^7.0.9",
     "nodemon": "^3.1.10",
-    "twilio": "^5.10.2"
+    "twilio": "^5.10.2",
+    "upstash": "^0.0.1"
   }
 }
