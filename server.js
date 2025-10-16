@@ -42,11 +42,10 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use(rateLimiter);
 
-// API routes
-app.use("/api/tasks", taskRoutes);
-app.use("/api/users", userRoutes);
+// API routes with rate limiting
+app.use("/api/tasks", rateLimiter, taskRoutes);
+app.use("/api/users", rateLimiter, userRoutes);
 
 // Serve React build files in production
 if (process.env.NODE_ENV === 'production') {
