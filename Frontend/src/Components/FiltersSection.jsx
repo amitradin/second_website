@@ -9,9 +9,7 @@ const FiltersSection = ({ activeRoute, tasks = [], onFilterChange }) => {
   const [uniqueCourses, setCourses] = useState([]);
   const [selectedPriorities, setSelectedPriorities] = useState([]);
   const [uniquePriorities, setUniquePriorities] = useState([
-    "Low",
-    "Medium",
-    "High",
+   
   ]);
 
   const handleCourseToggle = (course) => {
@@ -46,6 +44,13 @@ const FiltersSection = ({ activeRoute, tasks = [], onFilterChange }) => {
         allCourses.filter((course) => course && course.trim() !== "")
       ),
     ];
+    const allPriorities = filterCourses.map((task) => task.priority);
+    const uniquePriorities = [
+      ...new Set(
+        allPriorities.filter((priority) => priority && priority.trim() !== "")
+      ),
+    ];
+    setUniquePriorities(uniquePriorities);
     setCourses(uniqueCourses);
   }, [activeRoute, tasks]);
 
