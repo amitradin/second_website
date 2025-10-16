@@ -10,6 +10,7 @@ import taskRoutes from "./Backend/src/routes/taskRoutes.js";
 import userRoutes from "./Backend/src/routes/userRoutes.js";
 
 import './Backend/src/services/sendNotifications.js';
+import rateLimiter from "./Backend/src/middleware/rateLimiter.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -41,6 +42,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(rateLimiter);
 
 // API routes
 app.use("/api/tasks", taskRoutes);

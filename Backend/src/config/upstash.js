@@ -4,11 +4,11 @@ import dotenv from 'dotenv'
 
 // I want to implement a simple rate limiter.
 
-dotenv.config({quiet:true})
+dotenv.config()
 
-const ratelimit = new Ratelimit({
+const ratelimiter = new Ratelimit({
     redis: Redis.fromEnv(),
-    limiter: Ratelimit.slidingWindow(15, '1 m'), // 15 requests per minute - more reasonable
+    limiter: Ratelimit.slidingWindow(5, '1 m'), // 5 requests per minute
 })
 
-export default ratelimit
+export default ratelimiter
