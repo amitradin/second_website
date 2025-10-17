@@ -5,8 +5,6 @@ import { connectDB } from "./config/db.js";
 import dotenv from "dotenv";
 import taskRoutes from "./routes/taskRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
-
-import {checkDueTasks} from './services/sendNotification.js';
 import rateLimiter from "./middleware/rateLimiter.js";
 
 dotenv.config({ quiet: true });
@@ -62,6 +60,11 @@ const PORT = process.env.PORT || 5001;
 connectDB().then(() => {
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
+  });
+  import('./services/sendNotification.js').then(() => {
+    console.log('📧 Email notification scheduler started');
+  }).catch((error) => {
+    console.error('❌ Failed to start notification scheduler:', error);
   });
 }).catch((error) => {
   console.error('Failed to connect to database:', error);
