@@ -9,7 +9,6 @@ import dotenv from "dotenv";
 import taskRoutes from "./Backend/src/routes/taskRoutes.js";
 import userRoutes from "./Backend/src/routes/userRoutes.js";
 
-import {checkDueTasks} from './Backend/src/services/sendNotification.js';
 import rateLimiter from "./Backend/src/middleware/rateLimiter.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -77,6 +76,13 @@ const PORT = process.env.PORT || 5001;
 connectDB().then(() => {
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`Full-stack server running on port ${PORT}`);
+    
+    // Start notification scheduler after database is connected
+    import('./Backend/src/services/sendNotification.js').then(() => {
+      console.log('📧 Email notification scheduler started');
+    }).catch((error) => {
+      console.error('❌ Failed to start notification scheduler:', error);
+    });
   });
 }).catch((error) => {
   console.error('Failed to connect to database:', error);
