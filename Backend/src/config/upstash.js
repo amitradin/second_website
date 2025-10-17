@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 
 // I want to implement a simple rate limiter.
 
-dotenv.config()
+dotenv.config({ quiet: true });
 
 const ratelimit = new Ratelimit({
     redis: Redis.fromEnv(),

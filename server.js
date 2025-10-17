@@ -9,13 +9,13 @@ import dotenv from "dotenv";
 import taskRoutes from "./Backend/src/routes/taskRoutes.js";
 import userRoutes from "./Backend/src/routes/userRoutes.js";
 
-import './Backend/src/services/sendNotifications.js';
+import {checkDueTasks} from './Backend/src/services/sendNotification.js';
 import rateLimiter from "./Backend/src/middleware/rateLimiter.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-dotenv.config({ path: './Backend/.env' });
+dotenv.config({ path: './Backend/.env', quiet: true });
 
 const app = express();
 

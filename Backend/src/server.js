@@ -6,8 +6,7 @@ import dotenv from "dotenv";
 import taskRoutes from "./routes/taskRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 
-import './services/sendNotifications.js';
-import { checkDueTasks } from "./services/sendNotifications.js";
+import {checkDueTasks} from './services/sendNotification.js';
 import rateLimiter from "./middleware/rateLimiter.js";
 
 dotenv.config({ quiet: true });
