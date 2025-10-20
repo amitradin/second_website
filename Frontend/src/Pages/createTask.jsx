@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { Menu, Inbox, Plus, CheckCircle, ArrowLeft } from "lucide-react";
+import {Link} from "react-router-dom";
 
 const CreateTask = () => {
   const [formData, setFormData] = useState({
@@ -64,28 +65,28 @@ const CreateTask = () => {
                 <h2 className="text-lg font-semibold mb-4">Task Manager</h2>
                 <ul className="menu p-0 w-full bg-gray-300 rounded-lg">
                   <li className="mb-2">
-                    <a href="/" className="flex items-center p-3 rounded-lg ">
+                    <Link to="/" className="flex items-center p-3 rounded-lg ">
                       <Inbox className="w-5 h-5 mr-3" />
                       Pending Tasks
-                    </a>
+                    </Link>
                   </li>
                   <li className="mb-2">
-                    <a
-                      href="/create-task"
+                    <Link
+                      to="/create-task"
                       className="flex items-center p-3 rounded-lg hover:bg-gray-200 bg-gray-200"
                     >
                       <Plus className="w-5 h-5 mr-3" />
                       Create Task
-                    </a>
+                    </Link>
                   </li>
                   <li className="mb-2">
-                    <a
-                      href="/completed"
+                    <Link
+                      to="/completed"
                       className="flex items-center p-3 rounded-lg hover:bg-gray-200 "
                     >
                       <CheckCircle className="w-5 h-5 mr-3" />
                       Completed
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>

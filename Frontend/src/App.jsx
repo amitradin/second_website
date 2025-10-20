@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Suspense, lazy } from "react";
 import {Route, Routes, Navigate} from "react-router";
 import Header from "./Components/Header";
+import { listen } from "quicklink";
 
 // Lazy load page components
 const HomePage = lazy(() => import("./Pages/HomePage"));
@@ -32,6 +33,9 @@ const App = () => {
     const token = localStorage.getItem('accessToken');
     setIsAuthenticated(!!token);
     setIsLoading(false);
+
+    // preload links
+    listen();
   }, []);
 
   const isAuthPage = window.location.pathname === '/login' || window.location.pathname === '/signup';

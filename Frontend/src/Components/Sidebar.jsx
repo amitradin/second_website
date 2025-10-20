@@ -1,5 +1,6 @@
 import React from "react";
 import { Menu, Inbox, Plus, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Sidebar = ({ activeRoute, taskCount, statisticsLabel = "Tasks" }) => {
   return (
@@ -11,37 +12,37 @@ const Sidebar = ({ activeRoute, taskCount, statisticsLabel = "Tasks" }) => {
         </h2>
         <ul className="menu p-0 w-full bg-gray-300 rounded-lg">
           <li className="mb-2">
-            <a
-              href="/"
+            <Link
+              to="/"
               className={`flex items-center p-3 rounded-lg hover:bg-gray-200 ${
                 activeRoute === "pending" ? "bg-gray-200" : ""
               }`}
             >
               <Inbox className="w-5 h-5 mr-3" />
               <span className="truncate">Pending Tasks</span>
-            </a>
+            </Link>
           </li>
           <li className="mb-2">
-            <a
-              href="/create-task"
+            <Link
+              to="/create-task"
               className={`flex items-center p-3 rounded-lg hover:bg-gray-200 ${
                 activeRoute === "create" ? "bg-gray-200" : ""
               }`}
             >
               <Plus className="w-5 h-5 mr-3" />
               <span className="truncate">Create Task</span>
-            </a>
+            </Link>
           </li>
           <li className="mb-2">
-            <a
-              href="/completed"
+            <Link
+              to="/completed"
               className={`flex items-center p-3 rounded-lg hover:bg-gray-200 ${
                 activeRoute === "completed" ? "bg-gray-200" : ""
               }`}
             >
               <CheckCircle className="w-5 h-5 mr-3" />
               <span className="truncate">Completed</span>
-            </a>
+            </Link>
           </li>
         </ul>
 

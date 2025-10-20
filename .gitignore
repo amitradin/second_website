@@ -58,3 +58,4 @@ Thumbs.db
 # Production builds
 */build/
 */dist/
+request_bot.js
