@@ -16,8 +16,7 @@ const allowedOrigins = [
   "http://localhost:3000", 
   "http://localhost:5173", 
   "http://127.0.0.1:3000", 
-  "http://127.0.0.1:5173",
-  "https://university-tasks-alpha.vercel.app/", // Frontend Render URL
+  "http://127.0.0.1:5173"
 ];
 
 if (process.env.FRONTEND_VERCEL_URL) {
