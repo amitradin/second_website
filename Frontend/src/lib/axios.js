@@ -1,9 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: process.env.NODE_ENV === 'production' 
-        ? "/api"  // Relative URL since frontend and backend are served from same domain
-        : "http://localhost:5001/api",
+    baseURL: import.meta.env.VITE_BACKEND_URL || 'http://localhost:5001/api',
 });
 
 // Add a request interceptor to include the auth token
@@ -20,6 +18,9 @@ instance.interceptors.request.use(
     }
 );
 
+let isRefreshing = false;
+let failedQueue = [];
+
 // Add a response interceptor to handle token expiration
 instance.interceptors.response.use(
     (response) => response,
@@ -31,26 +32,38 @@ instance.interceptors.response.use(
             
             const refreshToken = localStorage.getItem('refreshToken');
             if (refreshToken) {
-                try {
-                    const baseURL = process.env.NODE_ENV === 'production' 
-                        ? "https://your-backend-service-name.onrender.com/api"  // Replace with your actual Render backend URL
-                        : "http://localhost:5001/api";
-                    
-                    const response = await axios.post(`${baseURL}/users/refresh-token`, {
-                        refreshToken
-                    });
-                    
-                    const { accessToken } = response.data;
-                    localStorage.setItem('accessToken', accessToken);
-                    
-                    originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-                    return instance(originalRequest);
-                } catch (refreshError) {
-                    // Refresh token is invalid, redirect to login
-                    localStorage.removeItem('accessToken');
-                    localStorage.removeItem('refreshToken');
-                    window.location.href = '/login'; // You'll need to create this page
+                if (!isRefreshing) {
+                    isRefreshing = true;
+                    try {
+                        const response = await axios.post(`${instance.defaults.baseURL}/users/refresh-token`, {
+                            refreshToken
+                        });
+                        
+                        const { accessToken } = response.data;
+                        localStorage.setItem('accessToken', accessToken);
+                        
+                        instance.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+                        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
+                        
+                        failedQueue.forEach(prom => prom.resolve(accessToken));
+                        failedQueue = [];
+                        
+                        return instance(originalRequest);
+                    } catch (refreshError) {
+                        failedQueue.forEach(prom => prom.reject(refreshError));
+                        failedQueue = [];
+                        // Refresh token is invalid, redirect to login
+                        localStorage.removeItem('accessToken');
+                        localStorage.removeItem('refreshToken');
+                        window.location.href = '/login'; // You'll need to create this page
+                        return Promise.reject(refreshError);
+                    } finally {
+                        isRefreshing = false;
+                    }
                 }
+                return new Promise((resolve, reject) => {
+                    failedQueue.push({ resolve: () => resolve(instance(originalRequest)), reject });
+                });
             }
         }
         

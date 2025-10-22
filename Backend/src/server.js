@@ -17,8 +17,11 @@ const allowedOrigins = [
   "http://localhost:5173", 
   "http://127.0.0.1:3000", 
   "http://127.0.0.1:5173",
-  "https://university-task-tracker-frontend.onrender.com", // Frontend Render URL
+  "https://university-tasks-alpha.vercel.app/", // Frontend Render URL
 ];
+
+if (process.env.FRONTEND_VERCEL_URL) {
+  allowedOrigins.push(process.env.FRONTEND_VERCEL_URL);}
 
 app.use(cors({
   origin: function (origin, callback) {
