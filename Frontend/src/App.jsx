@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Suspense, lazy } from "react";
-import {Route, Routes, Navigate} from "react-router";
+import {Route, Routes, Navigate, useLocation} from "react-router";
 import Header from "./Components/Header";
 import { listen } from "quicklink";
 
@@ -27,6 +27,7 @@ const AuthRoute = ({ children }) => {
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const location = useLocation();
 
   useEffect(() => {
     // Check authentication status on app load
@@ -38,7 +39,7 @@ const App = () => {
     listen();
   }, []);
 
-  const isAuthPage = window.location.pathname === '/login' || window.location.pathname === '/signup';
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
 
   if (isLoading) {
     return (
