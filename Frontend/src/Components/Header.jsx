@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { LogOut, User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userData = localStorage.getItem('user');
@@ -15,7 +17,7 @@ const Header = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('user');
-    window.location.href = '/login';
+    navigate('/login');
   };
 
   return (
