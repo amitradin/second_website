@@ -42,7 +42,7 @@ const App = () => {
   }, []);
 
   const isAuthPage =
-    location.pathname === "/login" || location.pathname === "/signup";
+    location.pathname === "/login" || location.pathname === "/signup" || location.pathname === "/forgot-password" || location.pathname.startsWith("/reset-password");
 
   if (isLoading) {
     return (
