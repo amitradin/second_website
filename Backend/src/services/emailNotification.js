@@ -46,3 +46,4 @@ const sendEmailNotification = async (userEmail, task) => {
 };
 
 export default sendEmailNotification;
+

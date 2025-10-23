@@ -2,6 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({
     baseURL: import.meta.env.VITE_BACKEND_URL || 'http://localhost:5001/api',
+    //baseURL: 'http://localhost:5001/api', // this is for testing purposes
 });
 
 // Add a request interceptor to include the auth token
