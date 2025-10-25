@@ -18,6 +18,7 @@ export const checkDueTasks = async () => {
         // Find tasks due in 2 days
         const dueTasks = await Task.find({
             dueDate: { $gte: Date.now(), $lte: endOfDay },
+            completed: false // Only consider incomplete tasks
             //Should only send to users that allowed notifications but for testing I'll skip that
         }).populate('user'); // This gets the user details too.
 
