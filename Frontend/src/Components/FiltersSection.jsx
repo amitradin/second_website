@@ -64,7 +64,7 @@ const FiltersSection = ({ activeRoute, tasks = [], onFilterChange }) => {
           <div className="stat">
             <div className="stat-title text-black">Course</div>
             {/* now I'll add the list of available courses here */}
-            <div className="list-disc list-inside text-sm text-black p-2">
+            <div className="list-disc list-inside text-sm text-black p-2 space-y-1">
               {uniqueCourses.map((course) => (
                 <label
                   key={course}
@@ -74,7 +74,7 @@ const FiltersSection = ({ activeRoute, tasks = [], onFilterChange }) => {
                     type="checkbox"
                     checked={selectedCourses.includes(course)}
                     onChange={() => handleCourseToggle(course)}
-                    className="mr-2 accent-blue-600"
+                    className="checkbox checkbox-sm mr-2 border-black [--chkbg:theme(colors.blue.600)] [--chkfg:white]"
                   />
                   <span
                     className={`text-sm ${
@@ -87,7 +87,7 @@ const FiltersSection = ({ activeRoute, tasks = [], onFilterChange }) => {
               ))}
             </div>
             <div className="stat-title text-black">Priority</div>
-            <div className="list-disc list-inside text-sm text-black p-2">
+            <div className="list-disc list-inside text-sm text-black p-2 space-y-1">
               {uniquePriorities.map((priority) => (
                 <label
                   key={priority}
@@ -97,7 +97,7 @@ const FiltersSection = ({ activeRoute, tasks = [], onFilterChange }) => {
                     type="checkbox"
                     checked={selectedPriorities.includes(priority)}
                     onChange={() => handlePriorityToggle(priority)}
-                    className="mr-2 accent-blue-600"
+                    className="checkbox checkbox-sm mr-2 border-black [--chkbg:theme(colors.blue.600)] [--chkfg:white]"
                   />
                   <span
                     className={`text-sm ${

@@ -2,7 +2,14 @@ import React from "react";
 import { Menu, Inbox, Plus, CheckCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const Sidebar = ({ activeRoute, taskCount, statisticsLabel = "Tasks" }) => {
+const Sidebar = ({
+  activeRoute,
+  taskCount,
+  lowPriorityCount,
+  mediumPriorityCount,
+  highPriorityCount,
+  statisticsLabel = "Tasks",
+}) => {
   return (
     <div className="bg-gray-400 text-gray-800">
       {/* Sidebar content */}
@@ -52,11 +59,28 @@ const Sidebar = ({ activeRoute, taskCount, statisticsLabel = "Tasks" }) => {
             Statistics
           </h3>
           <div className="stats stats-vertical shadow w-full bg-gray-300">
-            <div className="stat">
-              <div className="stat-title text-xs text-black">
-                {statisticsLabel}
+            <div className="stat p-3">
+              <div className="flex items-center space-x-1">
+                <div className="stat-title text-xs text-black">
+                  {`Total ${statisticsLabel}:`}
+                </div>
+                <div className="stat-value text-sm font-semibold">{taskCount}</div>
               </div>
-              <div className="stat-value text-lg">{taskCount}</div>
+              
+              <div className="pl-2 mt-2 space-y-0.5">
+                <div className="flex items-center space-x-1">
+                  <div className="stat-title text-xs text-black">- Low priority:</div>
+                  <div className="stat-value text-sm font-semibold">{lowPriorityCount}</div>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <div className="stat-title text-xs text-black">- Medium priority:</div>
+                  <div className="stat-value text-sm font-semibold">{mediumPriorityCount}</div>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <div className="stat-title text-xs text-black">- High priority:</div>
+                  <div className="stat-value text-sm font-semibold">{highPriorityCount}</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

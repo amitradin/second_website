@@ -53,7 +53,10 @@ const HomePage = () => {
         {/* Sidebar */}
         <Sidebar 
           activeRoute="pending" 
-          taskCount={tasks.length} 
+          taskCount={tasks.length}
+          lowPriorityCount= {tasks.filter(task => task.priority === 'Low').length} 
+          mediumPriorityCount= {tasks.filter(task => task.priority === 'Medium').length}
+          highPriorityCount= {tasks.filter(task => task.priority === 'High').length}
           statisticsLabel="Pending Tasks" 
         />
         

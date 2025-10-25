@@ -53,6 +53,9 @@ const CompletedTasks = () => {
         <Sidebar
           activeRoute="completed"
           taskCount={tasks.length}
+          lowPriorityCount= {tasks.filter(task => task.priority === 'Low').length}
+          mediumPriorityCount= {tasks.filter(task => task.priority === 'Medium').length}
+          highPriorityCount= {tasks.filter(task => task.priority === 'High').length}
           statisticsLabel="Completed Tasks"
         />
 
