@@ -16,7 +16,7 @@ const HomePage = () => {
     setSelectedPriorities(priorities);
   };
 
-  useEffect(() => {
+  useEffect(() => { //test
     const fetchTasks = async () => {
       try {
         const response = await axiosInstance.get("/tasks");
