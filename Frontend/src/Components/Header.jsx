@@ -1,34 +1,75 @@
 import React, { useState, useEffect } from "react";
 import { LogOut, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import axiosInstance from "../lib/axios.js";
 
 const Header = () => {
   const [user, setUser] = useState(null);
+  
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userData = localStorage.getItem('user');
+    const userData = localStorage.getItem("user");
     if (userData) {
       setUser(JSON.parse(userData));
     }
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('user');
-    navigate('/login');
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("user");
+    navigate("/login");
+  };
+
+  const handleToggleNotifications = async () => {
+    if (!user) return; // Should not happen if the toggle is rendered conditionally
+
+    const newNotificationStatus = !user.notification;
+
+    try {
+      // Optimistic UI update
+      const updatedUser = { ...user, notification: newNotificationStatus };
+      setUser(updatedUser);
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+
+      await axiosInstance.post("/users/notifications/toggle", {
+        enabled: newNotificationStatus, // Backend expects 'enabled'
+      });
+      // No need for toast.success here, as the UI is already updated
+    } catch (error) {
+      console.error("Failed to toggle notifications:", error);
+      // Revert UI on error
+      setUser(user); // Revert to previous state
+      localStorage.setItem("user", JSON.stringify(user));
+      toast.error("Failed to update notification preference.");
+    }
   };
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-200 px-4 sm:px-6 py-3 sm:py-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center min-w-0">
-          <h1 className="text-lg sm:text-xl font-semibold text-gray-800 truncate">University Task Tracker</h1>
+          <h1 className="text-lg sm:text-xl font-semibold text-gray-800 truncate">
+            University Task Tracker
+          </h1>
         </div>
         {user && (
           <div className="flex items-center space-x-3 sm:space-x-4">
             <div className="flex items-center space-x-2 min-w-0">
+             
+              <span className="text-sm text-gray-700 truncate max-w-[140px] sm:max-w-none">
+                notifications
+              </span>
+                <div>
+                  <input type="checkbox" className="toggle  bg-gray-400"
+                  checked={user.notification} // Control the checkbox with the user's notification status
+                  onChange={handleToggleNotifications}/>
+               </div>
+              
+               
+              
+
               <User className="w-5 h-5 text-gray-600 shrink-0" />
               <span className="text-sm text-gray-700 truncate max-w-[140px] sm:max-w-none">
                 {user.firstName} {user.lastName}

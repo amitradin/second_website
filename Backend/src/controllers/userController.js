@@ -355,3 +355,22 @@ export async function resetPassword(req, res) {
     });
   }
 }
+
+export async function toggleNotifications(req, res) {
+  try{
+    const user = req.user;
+    const { enabled } = req.body;
+    user.notification = enabled;
+    await user.save();
+    res.status(200).json({
+      success: true,
+      message: `Notifications have been ${enabled ? "enabled" : "disabled"}.`,
+    });
+  } catch (error) {
+    console.error("Toggle notifications error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error during notifications toggle",
+    });
+  }
+}

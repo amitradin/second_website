@@ -16,14 +16,14 @@ export const checkDueTasks = async () => {
         endOfDay.setHours(23, 59, 59, 999);
 
         // Find tasks due in 2 days
-        const dueTasks = await Task.find({
+        let dueTasks = await Task.find({
             dueDate: { $gte: Date.now(), $lte: endOfDay },
             completed: false // Only consider incomplete tasks
             
         }).populate('user'); // This gets the user details too.
 
         dueTasks = dueTasks.filter(task => {
-            return task.user && task.user.notification;
+            return task.user && task.user.notification; // Corrected from 'notifications' to 'notification'
         }) // Filter tasks where user has allowed notifications.
 
         for (const task of dueTasks){
