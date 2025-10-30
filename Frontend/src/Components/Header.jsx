@@ -47,37 +47,36 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200 px-4 sm:px-6 py-3 sm:py-4">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+    <header className="bg-white shadow-sm border-b border-gray-200 px-2 sm:px-6 py-3 sm:py-4">
+      <div className="flex items-center justify-between gap-2">
         <div className="flex items-center min-w-0">
-          <h1 className="text-lg sm:text-xl font-semibold text-gray-800 truncate">
+          <h1 className="text-base sm:text-xl font-semibold text-gray-800 truncate">
             University Task Tracker
           </h1>
         </div>
         {user && (
-          <div className="flex items-center space-x-3 sm:space-x-4">
-            <div className="flex items-center space-x-2 min-w-0">
+          <div className="flex items-center space-x-1 sm:space-x-4">
+            <div className="flex items-center space-x-1 sm:space-x-2 min-w-0">
              
-              <span className="text-sm text-gray-700 truncate max-w-[140px] sm:max-w-none">
+              <span className="hidden sm:inline text-sm text-gray-700">
                 notifications
               </span>
                 <div>
-                  <input type="checkbox" className="toggle  bg-gray-400"
+                  <input type="checkbox" className="toggle toggle-xs sm:toggle-sm bg-gray-400"
                   checked={user.notification} // Control the checkbox with the user's notification status
                   onChange={handleToggleNotifications}/>
                </div>
-              
-               
-              
 
-              <User className="w-5 h-5 text-gray-600 shrink-0" />
-              <span className="text-sm text-gray-700 truncate max-w-[140px] sm:max-w-none">
-                {user.firstName} {user.lastName}
+              <User className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 shrink-0 ml-1 sm:ml-0" />
+              <span className="text-sm text-gray-700 truncate min-w-0">
+                <span className="hidden sm:inline">{user.lastName}</span>
+                <span className="sm:hidden">{user.firstName}</span>
+                <span className="hidden sm:inline"> {user.firstName}</span>
               </span>
             </div>
             <button
               onClick={handleLogout}
-              className="flex items-center space-x-2 px-3 py-2 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+              className="flex items-center space-x-1 sm:space-x-2 px-2 py-1 sm:px-3 sm:py-2 text-sm text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
             >
               <LogOut className="w-4 h-4" />
               <span className="hidden sm:inline">Logout</span>
