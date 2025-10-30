@@ -62,7 +62,7 @@ const Header = () => {
                 notifications
               </span>
                 <div>
-                  <input type="checkbox" className="toggle toggle-xs sm:toggle-sm bg-gray-400"
+                  <input type="checkbox" className="toggle toggle-s sm:toggle-sm bg-gray-400"
                   checked={user.notification} // Control the checkbox with the user's notification status
                   onChange={handleToggleNotifications}/>
                </div>
