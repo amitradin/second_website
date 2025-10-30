@@ -58,7 +58,7 @@ const Header = () => {
           <div className="flex items-center space-x-1 sm:space-x-4">
             <div className="flex items-center space-x-1 sm:space-x-2 min-w-0">
              
-              <span className="hidden sm:inline text-sm text-gray-700">
+              <span className="sm:inline text-sm text-gray-700">
                 notifications
               </span>
                 <div>
