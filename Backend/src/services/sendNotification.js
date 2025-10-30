@@ -57,20 +57,35 @@ export const checkDueTasks = async () => {
 }
 
 const scheduleNotifications = () => {
-    const checkInterval = 24 * 60 * 60 * 1000; // Check every 24 hours
+    const twentyFourHours = 24 * 60 * 60 * 1000;
 
-    // Initial check
-    checkDueTasks();
+    const runCheck = () => {
+        console.log("Running scheduled task check...");
+        checkDueTasks();
+    };
 
-    setInterval(() => {
+    const scheduleNextCheck = () => {
         const now = new Date();
-        if(now.getHours() === 9){ // Fixed: added () to getHours()
-            checkDueTasks();
+        const nextCheck = new Date();
+
+        nextCheck.setHours(9, 0, 0, 0); // Set target time to 9:00:00 AM
+
+        // If it's already past 9 AM today, schedule for 9 AM tomorrow
+        if (now > nextCheck) {
+            nextCheck.setDate(nextCheck.getDate() + 1);
         }
 
-    } , checkInterval);
+        const delay = nextCheck.getTime() - now.getTime();
 
-    console.log("Notification scheduler started, will check for due tasks every 24 hours at 9 AM.");
+        console.log(`Notification scheduler started. Next check in ${Math.round(delay / 1000 / 60)} minutes.`);
+
+        setTimeout(() => {
+            runCheck(); // Run the check once
+            setInterval(runCheck, twentyFourHours); // Then run it every 24 hours
+        }, delay);
+    };
+
+    scheduleNextCheck();
 }
 
 scheduleNotifications(); //Starting the scheduler
