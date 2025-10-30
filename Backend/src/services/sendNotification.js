@@ -68,9 +68,12 @@ const scheduleNotifications = () => {
         const now = new Date();
         const nextCheck = new Date();
 
-        nextCheck.setHours(9, 0, 0, 0); // Set target time to 9:00:00 AM
+        // Set target time to 7:00:00 AM UTC, which is 9:00 AM in UTC+2 (e.g., CEST).
+        // Adjust '7' if your local timezone has a different offset from UTC.
+        const targetHourUTC = 7;
+        nextCheck.setUTCHours(targetHourUTC, 0, 0, 0);
 
-        // If it's already past 9 AM today, schedule for 9 AM tomorrow
+        // If it's already past the target time today (in UTC), schedule for tomorrow
         if (now > nextCheck) {
             nextCheck.setDate(nextCheck.getDate() + 1);
         }
@@ -85,6 +88,11 @@ const scheduleNotifications = () => {
         }, delay);
     };
 
+    // 1. Run an initial check immediately when the server starts.
+    console.log("Running initial task check on server start...");
+    runCheck();
+
+    // 2. Schedule all subsequent checks.
     scheduleNextCheck();
 }
 
