@@ -16,7 +16,7 @@ export const checkDueTasks = async () => {
         endOfDay.setHours(23, 59, 59, 999);
 
         // Find tasks due in 2 days
-        now = new Date();
+        const now = new Date();
         now.setHours(0, 0, 0, 0);
         let dueTasks = await Task.find({
             dueDate: { $gte: now, $lte: endOfDay },
