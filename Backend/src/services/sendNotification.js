@@ -68,12 +68,11 @@ const scheduleNotifications = () => {
         const now = new Date();
         const nextCheck = new Date();
 
-        // Set target time to 7:00:00 AM UTC, which is 9:00 AM in UTC+2 (e.g., CEST).
-        // Adjust '7' if your local timezone has a different offset from UTC.
-        const targetHourUTC = 7;
+     
+        const targetHourUTC = 7.33;
         nextCheck.setUTCHours(targetHourUTC, 0, 0, 0);
 
-        // If it's already past the target time today (in UTC), schedule for tomorrow
+        // If it's already past the target time today , schedule for tomorrow
         if (now > nextCheck) {
             nextCheck.setDate(nextCheck.getDate() + 1);
         }
