@@ -16,8 +16,10 @@ export const checkDueTasks = async () => {
         endOfDay.setHours(23, 59, 59, 999);
 
         // Find tasks due in 2 days
+        now = new Date();
+        now.setHours(0, 0, 0, 0);
         let dueTasks = await Task.find({
-            dueDate: { $gte: Date.now(), $lte: endOfDay },
+            dueDate: { $gte: now, $lte: endOfDay },
             completed: false // Only consider incomplete tasks
             
         }).populate('user'); // This gets the user details too.
@@ -72,9 +74,8 @@ const scheduleNotifications = () => {
 
         // Set the target time for today in Israel
         const nextCheck = new Date(nowInIsrael);
-        nextCheck.setHours(9, 25, 0, 0);
+        nextCheck.setHours(9, 0, 0, 0);
 
-        // If it's already past 9:25 AM in Israel today, schedule for tomorrow
         if (nowInIsrael.getTime() > nextCheck.getTime()) {
             nextCheck.setDate(nextCheck.getDate() + 1);
         }
