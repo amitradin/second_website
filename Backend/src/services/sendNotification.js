@@ -65,19 +65,22 @@ const scheduleNotifications = () => {
     };
 
     const scheduleNextCheck = () => {
-        const now = new Date();
-        const nextCheck = new Date();
+        const now = new Date(); // Current server time
 
-     
-        const targetHourUTC = 7.33;
-        nextCheck.setUTCHours(targetHourUTC, 0, 0, 0);
+        // Get current time in Israel
+        const nowInIsrael = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Jerusalem' }));
 
-        // If it's already past the target time today , schedule for tomorrow
-        if (now > nextCheck) {
+        // Set the target time for today in Israel
+        const nextCheck = new Date(nowInIsrael);
+        nextCheck.setHours(9, 25, 0, 0);
+
+        // If it's already past 9:25 AM in Israel today, schedule for tomorrow
+        if (nowInIsrael.getTime() > nextCheck.getTime()) {
             nextCheck.setDate(nextCheck.getDate() + 1);
         }
 
-        const delay = nextCheck.getTime() - now.getTime();
+        // Calculate the delay from now (server time) to the target time (Israel time)
+        const delay = nextCheck.getTime() - nowInIsrael.getTime();
 
         console.log(`Notification scheduler started. Next check in ${Math.round(delay / 1000 / 60)} minutes.`);
 
