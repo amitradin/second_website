@@ -125,21 +125,58 @@ export async function uploadTaskFiles(req, res) {
 
     const uploadPromises = req.files.map((file) => {
       return new Promise((resolve, reject) => {
-        const uploadStream = bucket.openUploadStream(file.originalname, {
+        // Debug: Log what we're receiving
+        console.log('Original filename received:', file.originalname);
+        console.log('Filename buffer:', Buffer.from(file.originalname));
+        console.log('Filename as hex:', Buffer.from(file.originalname).toString('hex'));
+        
+        // Handle Hebrew characters properly
+        let originalName = file.originalname;
+        
+        // Try to detect and fix corrupted Hebrew
+        const isCorrupted = originalName.includes('×') || originalName.includes('�') || /[\u0080-\u00FF]/.test(originalName);
+        
+        if (isCorrupted) {
+          console.log('Detected corrupted Hebrew filename, attempting recovery...');
+          // Try to recover by converting from latin1 to utf8 (common corruption pattern)
+          try {
+            const recoveredName = Buffer.from(originalName, 'latin1').toString('utf8');
+            console.log('Attempted recovery result:', recoveredName);
+            // Only use recovered name if it looks reasonable (contains Hebrew characters)
+            if (/[\u0590-\u05FF]/.test(recoveredName)) {
+              originalName = recoveredName;
+              console.log('Successfully recovered Hebrew filename:', originalName);
+            } else {
+              console.log('Recovery failed, using fallback name');
+              const ext = file.mimetype.split('/')[1] || 'file';
+              originalName = `קובץ_${Date.now()}.${ext}`;
+            }
+          } catch (error) {
+            console.log('Recovery failed with error:', error);
+            const ext = file.mimetype.split('/')[1] || 'file';
+            originalName = `קובץ_${Date.now()}.${ext}`;
+          }
+        }
+        
+        // Use a safe filename for GridFS but store original in metadata
+        const safeGridFSName = `file_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        
+        const uploadStream = bucket.openUploadStream(safeGridFSName, {
           metadata: {
             taskId: req.params.id,
             userId: req.user._id,
             mimetype: file.mimetype,
-            originalname: file.originalname,
+            originalFilename: originalName, // Store Hebrew name here
           },
         });
         uploadStream.end(file.buffer);
 
         uploadStream.on("finish", () => {
+          console.log('Stored filename for display:', originalName);
           resolve({
             fileId: uploadStream.id,
             filename: uploadStream.filename,
-            originalName: file.originalname,
+            originalName: originalName, // Store the Hebrew filename for display
             mimetype: file.mimetype,
             size: file.size,
           });
@@ -173,9 +210,14 @@ export async function downloadTaskFile(req, res) {
     }
     const downloadStream = bucket.openDownloadStream(attachment.fileId);
 
+    // Handle Hebrew and Unicode filenames properly for download
+    const originalName = attachment.originalName;
+    const encodedFilename = encodeURIComponent(originalName);
+    const asciiFilename = originalName.replace(/[^\x00-\x7F]/g, "_"); // Fallback for older browsers
+    
     res.set({
       "Content-Type": attachment.mimetype,
-      "Content-Disposition": `attachment; filename = "${attachment.originalName}"`,
+      "Content-Disposition": `attachment; filename="${asciiFilename}"; filename*=UTF-8''${encodedFilename}`,
     });
 
     downloadStream.pipe(res);
