@@ -254,7 +254,16 @@ const EditTask = () => {
                   value={formData.dueDate}
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-black rounded-lg focus:ring-2 
-                  focus:ring-blue-500 focus:border-blue-500 transition-colors bg-white text-black"
+                  focus:ring-blue-500 focus:border-blue-500 transition-colors bg-white text-black
+                  appearance-none [-webkit-appearance:none] [-moz-appearance:textfield]
+                  min-h-[48px] text-base leading-tight"
+                  style={{
+                    WebkitAppearance: 'none',
+                    MozAppearance: 'textfield',
+                    minHeight: '48px',
+                    fontSize: '16px', // Prevents zoom on iOS
+                    lineHeight: '1.2'
+                  }}
                 />
               </div>
 
