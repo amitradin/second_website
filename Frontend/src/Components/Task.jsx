@@ -123,9 +123,6 @@ const Task = ({ task, setTask }) => {
                 )}
 
                 <div className="flex flex-wrap items-center gap-2 justify-between mt-2">
-                  <p className="text-sm text-gray-500">
-                    Created: {formatDate(task.createdAt)}
-                  </p>
                   <div className="flex items-center gap-1 justify-center flex-1">
                     <Circle
                       className={`w-4 h-4 ${getPriorityColor(task.priority)} `}
